@@ -449,19 +449,6 @@ QTabBar::tab:hover:!selected {
        <number>10</number>
       </property>
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QPushButton" name="btnUploadOriginal">
         <property name="text">
          <string>Upload Image</string>
@@ -475,6 +462,19 @@ QTabBar::tab:hover:!selected {
         </property>
        </widget>
       </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
@@ -487,12 +487,165 @@ QTabBar::tab:hover:!selected {
       </sizepolicy>
      </property>
      <widget class="QWidget" name="pageSingleView">
-      <layout class="QVBoxLayout" name="pageSingleViewLayout">
+      <layout class="QHBoxLayout" name="pageSingleViewLayout">
        <property name="spacing">
         <number>10</number>
        </property>
+       <!-- LEFT SIDEBAR: tabs + controls -->
        <item>
-        <layout class="QHBoxLayout" name="singleTitlesRow">
+        <widget class="QStackedWidget" name="parametersStack">
+         <property name="minimumSize">
+          <size>
+           <width>240</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>305</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <widget class="QWidget" name="pageTabView">
+          <layout class="QVBoxLayout" name="pageTabViewLayout">
+           <item>
+            <widget class="QTabWidget" name="tabs">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="tabThreshold">
+              <attribute name="title">
+               <string>Thresholding</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="tabThresholdLayout">
+               <item>
+                <widget class="QLabel" name="labelThresholdMode">
+                 <property name="text">
+                  <string>Mode</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboThresholdMode">
+                 <item>
+                  <property name="text">
+                   <string>Global</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Local</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="labelThresholdTechnique">
+                 <property name="text">
+                  <string>Technique</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboThresholdTechnique">
+                 <item>
+                  <property name="text">
+                   <string>Otsu</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Spectral</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Optimal</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="labelWindowSize">
+                 <property name="text">
+                  <string>Window Size</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="windowSize">
+                 <property name="minimum">
+                  <number>3</number>
+                 </property>
+                 <property name="maximum">
+                  <number>51</number>
+                 </property>
+                 <property name="value">
+                  <number>3</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnApplyThreshold">
+                 <property name="text">
+                  <string>Apply Thresholding</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacerThreshold">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tabSegmentation">
+              <attribute name="title">
+               <string>Segmentation</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="tabSegmentationLayout">
+               <item>
+                <widget class="QPushButton" name="btnApplySegmentation">
+                 <property name="text">
+                  <string>Apply Segmentation</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacerSegmentation">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <!-- RIGHT AREA: images stacked vertically -->
+       <item>
+        <layout class="QVBoxLayout" name="singleImagesColumn">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QLabel" name="lblSingleOriginalTitle">
            <property name="text">
@@ -504,24 +657,13 @@ QTabBar::tab:hover:!selected {
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblSingleOutputTitle">
-           <property name="text">
-            <string>Output</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="singleImageRow">
-         <property name="spacing">
-          <number>10</number>
-         </property>
-         <item>
           <widget class="QFrame" name="leftImageFrame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QVBoxLayout" name="leftImageLayout">
             <property name="leftMargin">
              <number>8</number>
@@ -539,8 +681,8 @@ QTabBar::tab:hover:!selected {
              <widget class="QLabel" name="lblOriginal">
               <property name="minimumSize">
                <size>
-                <width>540</width>
-                <height>280</height>
+                <width>0</width>
+                <height>200</height>
                </size>
               </property>
               <property name="text">
@@ -555,7 +697,23 @@ QTabBar::tab:hover:!selected {
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="lblSingleOutputTitle">
+           <property name="text">
+            <string>Output</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QFrame" name="rightImageFrame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>1</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QVBoxLayout" name="rightImageLayout">
             <property name="leftMargin">
              <number>8</number>
@@ -573,8 +731,8 @@ QTabBar::tab:hover:!selected {
              <widget class="QLabel" name="lblProcessed">
               <property name="minimumSize">
                <size>
-                <width>540</width>
-                <height>280</height>
+                <width>0</width>
+                <height>200</height>
                </size>
               </property>
               <property name="text">
@@ -787,10 +945,10 @@ QTabBar::tab:hover:!selected {
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="matchInputRow">
-           <property name="spacing">
-            <number>10</number>
-           </property>
+        <layout class="QHBoxLayout" name="matchInputRow">
+         <property name="stretch">
+          <string>1,1</string>
+         </property>
            <item>
             <widget class="QFrame" name="matchImage1Frame">
              <layout class="QVBoxLayout" name="matchImage1Layout">
@@ -952,158 +1110,7 @@ QTabBar::tab:hover:!selected {
      </widget>
     </widget>
    </item>
-   <item>
-    <widget class="QFrame" name="hDivider">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>2</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>2</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QStackedWidget" name="parametersStack">
-     <widget class="QWidget" name="pageTabView">
-      <layout class="QVBoxLayout" name="pageTabViewLayout">
-       <item>
-        <widget class="QTabWidget" name="tabs">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="tabThreshold">
-          <attribute name="title">
-           <string>Thresholding</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="tabThresholdLayout">
-           <item>
-            <widget class="QLabel" name="labelThresholdMode">
-             <property name="text">
-              <string>Mode</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboThresholdMode">
-             <item>
-              <property name="text">
-               <string>Global</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Local</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="labelThresholdTechnique">
-             <property name="text">
-              <string>Technique</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboThresholdTechnique">
-             <item>
-              <property name="text">
-               <string>Otsu</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Spectral</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Optimal</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="labelWindowSize">
-             <property name="text">
-              <string>Window Size</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="windowSize">
-             <property name="minimum">
-              <number>3</number>
-             </property>
-             <property name="maximum">
-              <number>51</number>
-             </property>
-             <property name="value">
-              <number>3</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnApplyThreshold">
-             <property name="text">
-              <string>Apply Thresholding</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacerThreshold">
-             <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tabSegmentation">
-          <attribute name="title">
-           <string>Segmentation</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="tabSegmentationLayout">
-           <item>
-            <widget class="QPushButton" name="btnApplySegmentation">
-             <property name="text">
-              <string>Apply Segmentation</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacerSegmentation">
-             <property name="orientation">
-              <enum>Qt::Orientation::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
+
   </layout>
  </widget>
  <resources/>

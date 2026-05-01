@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtCore import QFile, QMetaObject, Qt
+from PySide6.QtCore import QFile, QMetaObject
 from PySide6.QtGui import QAction
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import (
-    QMenu, QMenuBar, QStatusBar, QTabWidget,
-    QWidget, QVBoxLayout, QLabel, QPushButton,
-    QComboBox, QSpinBox
+    QMenu, QMenuBar, QStatusBar,
+    QWidget, QComboBox, QSpinBox, QPushButton,
+    QTabWidget, QStackedWidget
 )
 
 
@@ -48,68 +48,24 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionSave_Result)
         self.menuFile.addAction(self.actionExit)
 
-        # ================= EXISTING UI =================
-        self.lblOriginal = self.centralwidget.findChild(type(self.centralwidget), "lblOriginal")
-        self.lblProcessed = self.centralwidget.findChild(type(self.centralwidget), "lblProcessed")
+        # ================= WIDGETS FROM UI =================
+        # Top bar buttons (now on the LEFT side)
+        self.btnUploadOriginal = self.centralwidget.findChild(QPushButton, "btnUploadOriginal")
+        self.btnReset = self.centralwidget.findChild(QPushButton, "btnReset")
 
-        self.btnUploadOriginal = self.centralwidget.findChild(type(self.centralwidget), "btnUploadOriginal")
-        self.btnReset = self.centralwidget.findChild(type(self.centralwidget), "btnReset")
+        # Image labels
+        self.lblOriginal = self.centralwidget.findChild(QWidget, "lblOriginal")
+        self.lblProcessed = self.centralwidget.findChild(QWidget, "lblProcessed")
 
-        self.parametersStack = self.centralwidget.findChild(type(self.centralwidget), "parametersStack")
+        # Sidebar: parametersStack + tabs (embedded in left sidebar of pageSingleView)
+        self.parametersStack = self.centralwidget.findChild(QStackedWidget, "parametersStack")
+        self.tabs = self.centralwidget.findChild(QTabWidget, "tabs")
 
-        # ======================================================
-        # 🆕 REPLACE OLD PARAMETERS WITH TABS
-        # ======================================================
-
-        self.tabs = QTabWidget()
-
-        # ================= TAB 1: THRESHOLDING =================
-        self.tabThreshold = QWidget()
-        th_layout = QVBoxLayout(self.tabThreshold)
-
-        self.comboThresholdMode = QComboBox()
-        self.comboThresholdMode.addItems(["Global", "Local"])
-
-        self.comboThresholdTechnique = QComboBox()
-        self.comboThresholdTechnique.addItems(["Otsu", "Spectral", "Optimal"])
-
-        self.windowSize = QSpinBox()
-        self.windowSize.setRange(3, 51)
-        self.windowSize.setValue(3)
-
-        self.btnApplyThreshold = QPushButton("Apply Thresholding")
-
-        th_layout.addWidget(QLabel("Mode"))
-        th_layout.addWidget(self.comboThresholdMode)
-
-        th_layout.addWidget(QLabel("Technique"))
-        th_layout.addWidget(self.comboThresholdTechnique)
-
-        th_layout.addWidget(QLabel("Window Size"))
-        th_layout.addWidget(self.windowSize)
-
-        th_layout.addWidget(self.btnApplyThreshold)
-
-        # ================= TAB 2: SEGMENTATION =================
-        self.tabSegmentation = QWidget()
-        seg_layout = QVBoxLayout(self.tabSegmentation)
-
-        self.btnApplySegmentation = QPushButton("Apply Segmentation")
-        seg_layout.addWidget(self.btnApplySegmentation)
-
-        # ================= ADD TABS =================
-        self.tabs.addTab(self.tabThreshold, "Thresholding")
-        self.tabs.addTab(self.tabSegmentation, "Segmentation")
-
-        # inject into old stack (same UI structure preserved)
-        if self.parametersStack and self.parametersStack.layout():
-            layout = self.parametersStack.layout()
-
-            while layout.count():
-                item = layout.takeAt(0)
-                if item.widget():
-                    item.widget().deleteLater()
-
-            layout.addWidget(self.tabs)
+        # Tab controls
+        self.comboThresholdMode = self.centralwidget.findChild(QComboBox, "comboThresholdMode")
+        self.comboThresholdTechnique = self.centralwidget.findChild(QComboBox, "comboThresholdTechnique")
+        self.windowSize = self.centralwidget.findChild(QSpinBox, "windowSize")
+        self.btnApplyThreshold = self.centralwidget.findChild(QPushButton, "btnApplyThreshold")
+        self.btnApplySegmentation = self.centralwidget.findChild(QPushButton, "btnApplySegmentation")
 
         QMetaObject.connectSlotsByName(MainWindow)
