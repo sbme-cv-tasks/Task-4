@@ -2,6 +2,7 @@ import cv2
 from PySide6.QtWidgets import QFileDialog
 from PySide6.QtCore import Qt
 from utils.converters import cv_to_pixmap
+from controllers.threshold_controller import ThresholdController
 
 
 class MainController:
@@ -9,6 +10,7 @@ class MainController:
         self.ui = ui
         self.model = model
         self.window = window
+        self.threshold_controller = ThresholdController(ui, model, self.ui.statusbar)
         self._connect_signals()
 
     # ================= CONNECT =================
@@ -63,22 +65,8 @@ class MainController:
             self.ui.statusbar.showMessage("Load image first", 3000)
             return
 
-        mode = self.ui.comboThresholdMode.currentText()
-        technique = self.ui.comboThresholdTechnique.currentText()
-        window = self.ui.windowSize.value()
-
-        self.model.processed_image = self.model.threshold_image(
-            mode=mode,
-            technique=technique,
-            window_size=window
-        )
-
+        self.model.processed_image = self.threshold_controller.apply_thresholding()
         self.display_processed_image(self.model.processed_image)
-
-        self.ui.statusbar.showMessage(
-            f"Thresholding: {mode} - {technique}",
-            3000
-        )
 
     # ================= SEGMENTATION =================
     def apply_segmentation(self):
