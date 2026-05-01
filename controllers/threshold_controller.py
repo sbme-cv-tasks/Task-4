@@ -2,6 +2,7 @@ import cv2
 
 from core.global_thresholding import apply_global_threshold
 from core.local_thresholding import apply_local_threshold
+from core.spectral_thresholding import spectral_thresholding
 
 
 class ThresholdController:
@@ -38,6 +39,11 @@ class ThresholdController:
             raise ValueError(f"Unsupported mode: {mode}")
 
         gray = self._to_grayscale(self.model.original_image)
+
+        # Spectral thresholding is a segmentation technique, apply it directly
+        if technique.lower() == "spectral":
+            return spectral_thresholding(gray, k=3, sigma=20)
+
         threshold_function = self._select_threshold_function(technique)
 
         if mode == "Global":
@@ -63,7 +69,7 @@ class ThresholdController:
         raise ValueError(f"Unsupported threshold technique: {technique}")
 
     def _otsu_threshold(self, image):
-        _, threshold = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        threshold, _ = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         return threshold
 
     def _optimal_threshold(self, image):
@@ -71,5 +77,5 @@ class ThresholdController:
         return compute_optimal_threshold(image)
 
     def _spectral_threshold(self, image):
-        _, threshold = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE)
-        return threshold
+        # This should not be called directly since spectral is handled in apply_thresholding
+        raise NotImplementedError("Spectral thresholding is handled separately in apply_thresholding()")

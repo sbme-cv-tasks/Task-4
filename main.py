@@ -15,7 +15,6 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # ================= UI =================
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -23,17 +22,9 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
-
-    # ================= WINDOW =================
     window = MainWindow()
-
-    # ================= MODEL =================
     model = ImageModel()
-
-    # ================= CONTROLLER =================
     controller = MainController(window.ui, model, window)
-
-    # ================= SHOW =================
     window.show()
 
     sys.exit(app.exec())
