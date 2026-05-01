@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1366</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Image Studio</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* ========================================
+   STYLESHEET SECTION - Professional Gradient Theme
+   Theme Colors: Purple/Blue Gradient (#667eea, #764ba2)
+   Dark Background: #0f1419, #1a202c, #2d3748
+   ======================================== */
+
+/* Main Window */
+QMainWindow, QWidget {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #0f1419, stop:1 #1a1f2e);
+    color: #e4e8f0;
+    font-family: 'Segoe UI Semibold', 'Segoe UI';
+    font-size: 12px;
+}
+
+/* Labels */
+QLabel {
+    color: #e4e8f0;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    font-size: 12px;
+}
+
+/* Buttons */
+QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1f1f3d, stop:1 #0f0f25);
+    color: #e4e8f0;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    min-height: 24px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #2d2d5f, stop:1 #1a1a38);
+    border: 2px solid #764ba2;
+    color: #ffffff;
+}
+
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid #7c3aed;
+    color: #ffffff;
+}
+
+QPushButton#btnUploadOriginal {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid #5a67d8;
+    color: #ffffff;
+    min-width: 98px;
+}
+
+QPushButton#btnUploadOriginal:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #764ba2, stop:1 #9333ea);
+    border: 2px solid #7c3aed;
+    color: #ffffff;
+}
+
+QPushButton#btnReset {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1f1f3d, stop:1 #0f0f25);
+    border-color: #5674ff;
+    min-width: 58px;
+}
+
+QPushButton#btnUploadMatchImage1, QPushButton#btnUploadMatchImage2 {
+    min-width: 24px;
+    max-width: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    padding: 0;
+    border-radius: 6px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1f1f3d, stop:1 #0f0f25);
+    border: 2px solid #667eea;
+}
+
+QPushButton#btnUploadMatchImage1:hover, QPushButton#btnUploadMatchImage2:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #2d2d5f, stop:1 #1a1a38);
+    border: 2px solid #764ba2;
+}
+
+/* Input Fields */
+QComboBox, QSpinBox, QDoubleSpinBox {
+    background-color: #1a202c;
+    color: #e4e8f0;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 11px;
+    selection-background-color: #764ba2;
+}
+
+QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {
+    border: 2px solid #764ba2;
+    background-color: #1f2937;
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 22px;
+}
+
+QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #667eea;
+    margin-right: 8px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #1a202c;
+    color: #e4e8f0;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    selection-background-color: #667eea;
+    padding: 4px;
+}
+
+/* Group Boxes */
+QGroupBox {
+    color: #e4e8f0;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px 8px 8px 8px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1a1a36, stop:1 #0f0f1f);
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 3px 12px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Checkboxes */
+QCheckBox {
+    color: #e4e8f0;
+    font-size: 12px;
+    spacing: 8px;
+    padding: 4px;
+}
+
+QCheckBox::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    background-color: #1a202c;
+}
+
+QCheckBox::indicator:hover {
+    border: 2px solid #764ba2;
+    background-color: #1f2937;
+}
+
+QCheckBox::indicator:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid #5a67d8;
+    image: none;
+}
+
+/* Radio Buttons */
+QRadioButton {
+    color: #e4e8f0;
+    font-size: 12px;
+    spacing: 8px;
+    padding: 4px;
+}
+
+QRadioButton::indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #667eea;
+    border-radius: 9px;
+    background-color: #1a202c;
+}
+
+QRadioButton::indicator:hover {
+    border: 2px solid #764ba2;
+    background-color: #1f2937;
+}
+
+QRadioButton::indicator:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid #5a67d8;
+}
+
+/* Sliders */
+QSlider::groove:horizontal {
+    background: #1a202c;
+    height: 8px;
+    border-radius: 4px;
+    border: 1px solid #667eea;
+}
+
+QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border: 2px solid #5a67d8;
+    width: 18px;
+    margin: -6px 0;
+    border-radius: 9px;
+}
+
+QSlider::handle:horizontal:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #764ba2, stop:1 #9333ea);
+    border: 2px solid #7c3aed;
+}
+
+QSlider::sub-page:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border-radius: 4px;
+}
+
+/* Scroll Area */
+QScrollArea {
+    border: none;
+    background: transparent;
+}
+
+QScrollBar:vertical {
+    background-color: #0f0f25;
+    width: 12px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border-radius: 6px;
+    min-height: 30px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #764ba2, stop:1 #9333ea);
+}
+
+/* Custom Frames */
+#topBar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #0f1419, stop:1 #1a1f2e);
+}
+
+#leftImageFrame, #rightImageFrame {
+    border: 3px solid #667eea;
+    border-radius: 12px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #0f0f25, stop:1 #0a0a15);
+}
+
+#matchImage1Frame, #matchImage2Frame, #matchResultFrame {
+    border: 3px solid #667eea;
+    border-radius: 12px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #0f0f25, stop:1 #0a0a15);
+}
+
+#lblSingleOriginalTitle, #lblSingleOutputTitle {
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+#lblImg1Title, #lblImg2Title {
+    border: 0;
+    background-color: transparent;
+    padding: 1px 2px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #e4e8f0;
+}
+
+#lblOriginal, #lblProcessed, #lblMatchImage1, #lblMatchImage2, #lblMatchResult {
+    border: 0;
+    background-color: transparent;
+    color: #8892b0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#hDivider {
+    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                      stop:0 #667eea, stop:1 #764ba2);
+    min-height: 2px;
+    max-height: 2px;
+}
+
+#frameHarris, #frameLambda, #frameSift, #frameMatching, #matchSideFrame {
+    border: 2px solid #667eea;
+    border-radius: 14px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1a1a36, stop:1 #0f0f1f);
+}
+
+#matchThreshold, #matchCount {
+    background-color: #1a202c;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    min-height: 20px;
+    padding: 2px 4px;
+    color: #e4e8f0;
+}
+
+#lblMatchUsing {
+    font-size: 24px;
+    font-weight: 700;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    color: #667eea;
+}
+
+QLabel[chipTitle=&quot;true&quot;] {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    border: 1px solid #aebdff;
+    border-radius: 8px;
+    color: #edf2ff;
+    font-weight: 700;
+}
+
+#topTimeFrame {
+    border-radius: 8px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1a1a36, stop:1 #0f0f1f);
+    border: 1px solid #667eea;
+}
+
+#matchTimeFrame {
+    border-radius: 8px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1a1a36, stop:1 #0f0f1f);
+    border: 1px solid #667eea;
+}
+
+QMenuBar, QMenu {
+    background-color: #0f1419;
+    color: #e4e8f0;
+    border-bottom: 1px solid #667eea;
+}
+
+QMenuBar::item:selected {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    color: #ffffff;
+}
+
+/* Tab Widget */
+QTabWidget::pane {
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1a1a36, stop:1 #0f0f1f);
+    top: -1px;
+}
+
+QTabBar::tab {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1f1f3d, stop:1 #0f0f25);
+    color: #8892b0;
+    border: 2px solid #667eea;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 100px;
+}
+
+QTabBar::tab:selected {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #667eea, stop:1 #764ba2);
+    color: #ffffff;
+    border-color: #764ba2;
+}
+
+QTabBar::tab:hover:!selected {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #2d2d5f, stop:1 #1a1a38);
+    color: #e4e8f0;
+    border-color: #764ba2;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>16</number>
+   </property>
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="rightMargin">
+    <number>16</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="topBar">
+     <layout class="QHBoxLayout" name="topBarLayout">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUploadOriginal">
+        <property name="text">
+         <string>Upload Image</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnReset">
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="displayStack">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <widget class="QWidget" name="pageSingleView">
+      <layout class="QVBoxLayout" name="pageSingleViewLayout">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="singleTitlesRow">
+         <item>
+          <widget class="QLabel" name="lblSingleOriginalTitle">
+           <property name="text">
+            <string>Original</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblSingleOutputTitle">
+           <property name="text">
+            <string>Output</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="singleImageRow">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="leftImageFrame">
+           <layout class="QVBoxLayout" name="leftImageLayout">
+            <property name="leftMargin">
+             <number>8</number>
+            </property>
+            <property name="topMargin">
+             <number>8</number>
+            </property>
+            <property name="rightMargin">
+             <number>8</number>
+            </property>
+            <property name="bottomMargin">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblOriginal">
+              <property name="minimumSize">
+               <size>
+                <width>540</width>
+                <height>280</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>No Image</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="rightImageFrame">
+           <layout class="QVBoxLayout" name="rightImageLayout">
+            <property name="leftMargin">
+             <number>8</number>
+            </property>
+            <property name="topMargin">
+             <number>8</number>
+            </property>
+            <property name="rightMargin">
+             <number>8</number>
+            </property>
+            <property name="bottomMargin">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblProcessed">
+              <property name="minimumSize">
+               <size>
+                <width>540</width>
+                <height>280</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>No Image</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageMatchView">
+      <layout class="QHBoxLayout" name="pageMatchViewLayout">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="matchSideFrame">
+         <property name="minimumSize">
+          <size>
+           <width>290</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>320</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="matchSideLayout">
+          <property name="spacing">
+           <number>14</number>
+          </property>
+          <property name="leftMargin">
+           <number>14</number>
+          </property>
+          <property name="topMargin">
+           <number>14</number>
+          </property>
+          <property name="rightMargin">
+           <number>14</number>
+          </property>
+          <property name="bottomMargin">
+           <number>12</number>
+          </property>
+          <item>
+           <layout class="QFormLayout" name="formMatching">
+            <property name="horizontalSpacing">
+             <number>24</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>14</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelThreshold">
+              <property name="text">
+               <string>Threshold</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QDoubleSpinBox" name="matchThreshold">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="maximum">
+               <double>1.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.050000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.800000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelMatches">
+              <property name="text">
+               <string># of Matches</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="matchCount">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <number>10</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="singleStep">
+               <number>10</number>
+              </property>
+              <property name="value">
+               <number>150</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblMatchUsing">
+            <property name="text">
+             <string>Match Using:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnMatchNCC">
+            <property name="text">
+             <string>Normalized Cross Correlations.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnMatchSSD">
+            <property name="text">
+             <string>Sum of Squared Differences</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="matchRightLayout">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="matchTitlesRow">
+           <item>
+            <layout class="QHBoxLayout" name="matchTitle1Row">
+             <item>
+              <widget class="QLabel" name="lblImg1Title">
+               <property name="text">
+                <string>Image 01</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnUploadMatchImage1">
+               <property name="toolTip">
+                <string>Upload Image 01</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="matchTitle2Row">
+             <item>
+              <widget class="QLabel" name="lblImg2Title">
+               <property name="text">
+                <string>Image 02</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnUploadMatchImage2">
+               <property name="toolTip">
+                <string>Upload Image 02</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="matchInputRow">
+           <property name="spacing">
+            <number>10</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="matchImage1Frame">
+             <layout class="QVBoxLayout" name="matchImage1Layout">
+              <property name="leftMargin">
+               <number>8</number>
+              </property>
+              <property name="topMargin">
+               <number>8</number>
+              </property>
+              <property name="rightMargin">
+               <number>8</number>
+              </property>
+              <property name="bottomMargin">
+               <number>8</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lblMatchImage1">
+                <property name="minimumSize">
+                 <size>
+                  <width>360</width>
+                  <height>250</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>No Image</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="matchImage2Frame">
+             <layout class="QVBoxLayout" name="matchImage2Layout">
+              <property name="leftMargin">
+               <number>8</number>
+              </property>
+              <property name="topMargin">
+               <number>8</number>
+              </property>
+              <property name="rightMargin">
+               <number>8</number>
+              </property>
+              <property name="bottomMargin">
+               <number>8</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="lblMatchImage2">
+                <property name="minimumSize">
+                 <size>
+                  <width>360</width>
+                  <height>250</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>No Image</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QFrame" name="matchResultFrame">
+           <layout class="QVBoxLayout" name="matchResultLayout">
+            <property name="leftMargin">
+             <number>8</number>
+            </property>
+            <property name="topMargin">
+             <number>8</number>
+            </property>
+            <property name="rightMargin">
+             <number>8</number>
+            </property>
+            <property name="bottomMargin">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblMatchResult">
+              <property name="minimumSize">
+               <size>
+                <width>760</width>
+                <height>300</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Matching Result</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="matchTimeFrame">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="matchTimeLayout">
+            <property name="leftMargin">
+             <number>12</number>
+            </property>
+            <property name="topMargin">
+             <number>8</number>
+            </property>
+            <property name="rightMargin">
+             <number>12</number>
+            </property>
+            <property name="bottomMargin">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblTimeLabelMatch">
+              <property name="text">
+               <string>Computational Time:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacerMatch">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblTimeValueMatch">
+              <property name="text">
+               <string>0.000 S</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="hDivider">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>2</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>2</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="parametersStack">
+     <widget class="QWidget" name="pageTabView">
+      <layout class="QVBoxLayout" name="pageTabViewLayout">
+       <item>
+        <widget class="QTabWidget" name="tabs">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tabThreshold">
+          <attribute name="title">
+           <string>Thresholding</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="tabThresholdLayout">
+           <item>
+            <widget class="QLabel" name="labelThresholdMode">
+             <property name="text">
+              <string>Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboThresholdMode">
+             <item>
+              <property name="text">
+               <string>Global</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Local</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelThresholdTechnique">
+             <property name="text">
+              <string>Technique</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboThresholdTechnique">
+             <item>
+              <property name="text">
+               <string>Otsu</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Spectral</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Optimal</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelWindowSize">
+             <property name="text">
+              <string>Window Size</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="windowSize">
+             <property name="minimum">
+              <number>3</number>
+             </property>
+             <property name="maximum">
+              <number>51</number>
+             </property>
+             <property name="value">
+              <number>3</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnApplyThreshold">
+             <property name="text">
+              <string>Apply Thresholding</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacerThreshold">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tabSegmentation">
+          <attribute name="title">
+           <string>Segmentation</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="tabSegmentationLayout">
+           <item>
+            <widget class="QPushButton" name="btnApplySegmentation">
+             <property name="text">
+              <string>Apply Segmentation</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacerSegmentation">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
