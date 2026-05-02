@@ -1,5 +1,3 @@
-# local_thresholding.py
-
 import numpy as np
 
 
