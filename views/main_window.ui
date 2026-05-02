@@ -578,7 +578,7 @@ QTabBar::tab:hover:!selected {
                   <number>3</number>
                  </property>
                  <property name="maximum">
-                  <number>51</number>
+                  <number>150</number>
                  </property>
                  <property name="value">
                   <number>3</number>
