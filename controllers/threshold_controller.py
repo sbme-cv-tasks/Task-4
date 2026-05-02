@@ -3,6 +3,7 @@ import cv2
 from core.global_thresholding import apply_global_threshold
 from core.local_thresholding import apply_local_threshold
 from core.spectral_thresholding import spectral_thresholding
+from core.Otsu_thersholding import otsu_threshold
 
 
 class ThresholdController:
@@ -12,7 +13,10 @@ class ThresholdController:
         self.statusbar = statusbar
 
         self._connect_signals()
-        self.on_mode_changed(self.ui.comboThresholdMode.currentText())
+        
+        # Set default to Local mode to enable window size control
+        self.ui.comboThresholdMode.setCurrentText("Local")
+        self.on_mode_changed("Local")
 
     def _connect_signals(self):
         self.ui.comboThresholdMode.currentTextChanged.connect(self.on_mode_changed)
@@ -69,8 +73,7 @@ class ThresholdController:
         raise ValueError(f"Unsupported threshold technique: {technique}")
 
     def _otsu_threshold(self, image):
-        threshold, _ = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        return threshold
+        return otsu_threshold(image)
 
     def _optimal_threshold(self, image):
         from core.optimal_thresholding import compute_optimal_threshold

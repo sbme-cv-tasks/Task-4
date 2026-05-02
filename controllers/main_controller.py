@@ -16,8 +16,8 @@ class MainController:
     # ================= CONNECT =================
     def _connect_signals(self):
 
-        self.ui.actionOpen_Image.triggered.connect(self.load_image)
-        self.ui.actionExit.triggered.connect(self.window.close)
+        # self.ui.actionOpen_Image.triggered.connect(self.load_image)
+        # self.ui.actionExit.triggered.connect(self.window.close)
 
         self.ui.btnUploadOriginal.clicked.connect(self.load_image)
         self.ui.btnReset.clicked.connect(self.reset_view)

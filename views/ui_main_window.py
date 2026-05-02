@@ -32,21 +32,21 @@ class Ui_MainWindow(object):
         MainWindow.resize(1366, 768)
 
         # ================= MENU =================
-        self.actionOpen_Image = QAction(MainWindow)
-        self.actionSave_Result = QAction(MainWindow)
-        self.actionExit = QAction(MainWindow)
+        # self.actionOpen_Image = QAction(MainWindow)
+        # self.actionSave_Result = QAction(MainWindow)
+        # self.actionExit = QAction(MainWindow)
 
-        self.menubar = QMenuBar(MainWindow)
-        self.menuFile = QMenu("File", self.menubar)
-        self.menubar.addMenu(self.menuFile)
-        MainWindow.setMenuBar(self.menubar)
+        # self.menubar = QMenuBar(MainWindow)
+        # self.menuFile = QMenu("File", self.menubar)
+        # self.menubar.addMenu(self.menuFile)
+        # MainWindow.setMenuBar(self.menubar)
+
+        # self.menuFile.addAction(self.actionOpen_Image)
+        # self.menuFile.addAction(self.actionSave_Result)
+        # self.menuFile.addAction(self.actionExit)
 
         self.statusbar = QStatusBar(MainWindow)
         MainWindow.setStatusBar(self.statusbar)
-
-        self.menuFile.addAction(self.actionOpen_Image)
-        self.menuFile.addAction(self.actionSave_Result)
-        self.menuFile.addAction(self.actionExit)
 
         # ================= WIDGETS FROM UI =================
         # Top bar buttons (now on the LEFT side)
