@@ -3,50 +3,77 @@ import numpy as np
 from scipy.sparse import csgraph
 from scipy.linalg import eigh
 
-
-def spectral_thresholding(img, k=3, sigma=20):
-     
+def spectral_thresholding(img, k=3, sigma=20, random_seed=42):
     if len(img.shape) == 3:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 1. Histogram (0-255)
+    # 1. Compute histogram
     hist = cv2.calcHist([img], [0], None, [256], [0, 256]).flatten()
-    hist = hist + 1e-6  # avoid zero issues
+    hist = hist + 1e-6
 
-    # 2. Build intensity axis
+    # 2. Build Gaussian similarity matrix weighted by histogram
     x = np.arange(256).reshape(-1, 1)
-
-    # 3. Similarity matrix (Gaussian kernel)
     dist2 = (x - x.T) ** 2
     W = np.exp(-dist2 / (2 * sigma ** 2))
-
-    # weight by histogram importance
     W = W * np.outer(hist, hist)
 
-    # 4. Graph Laplacian
+    # 3. Compute normalized graph Laplacian
     L = csgraph.laplacian(W, normed=True)
 
-    # 5. Eigen decomposition
+    # 4. Eigen decomposition — k smallest non-trivial eigenvectors
     eigvals, eigvecs = eigh(L)
+    embedding = eigvecs[:, 1:k+1]  # shape (256, k)
 
-    # 6. Take first k eigenvectors (skip trivial one if needed)
-    embedding = eigvecs[:, 1:k+1]
+    # 5. K-means++ on the spectral embedding
+    rng = np.random.default_rng(random_seed)
+    first_idx = rng.integers(0, 256)
+    centroids = [embedding[first_idx]]
 
-    # 7. Simple k-means clustering
-    centroids = embedding[np.random.choice(256, k, replace=False)]
+    for _ in range(k - 1):
+        dists = np.min(
+            [np.linalg.norm(embedding - c, axis=1) ** 2 for c in centroids],
+            axis=0
+        )
+        probs = dists / dists.sum()
+        next_idx = rng.choice(256, p=probs)
+        centroids.append(embedding[next_idx])
+    centroids = np.array(centroids)
 
-    for _ in range(20):
+    # 6. K-means iterations on embedding
+    labels = None
+    for _ in range(50):
         d = np.linalg.norm(embedding[:, None] - centroids[None, :], axis=2)
         labels = np.argmin(d, axis=1)
+        new_centroids = np.array([
+            embedding[labels == i].mean(axis=0) if np.any(labels == i) else centroids[i]
+            for i in range(k)
+        ])
+        if np.allclose(centroids, new_centroids, atol=1e-6):
+            break
+        centroids = new_centroids
 
-        for i in range(k):
-            if np.any(labels == i):
-                centroids[i] = embedding[labels == i].mean(axis=0)
+    # 7. Sort clusters by mean intensity (dark → bright)
+    cluster_means = np.array([
+        np.mean(np.where(labels == i)[0]) for i in range(k)
+    ])
+    sorted_order = np.argsort(cluster_means)
+    label_map = np.zeros(k, dtype=int)
+    for new_label, old_label in enumerate(sorted_order):
+        label_map[old_label] = new_label
+    labels = label_map[labels]
 
-    # 8. Build segmented image
-    output = np.zeros_like(img)
+    # 8. Build output image directly from labels (no overlap fix)
+    output = np.zeros_like(img, dtype=np.uint8)
+    lut = np.zeros(256, dtype=np.uint8)
+    for i in range(256):
+        lut[i] = int(255 * labels[i] / (k - 1))
+    output = lut[img]
 
-    for i in range(k):
-        output[np.isin(img, np.where(labels == i)[0])] = int(255 * i / (k - 1))
+    # Extract boundaries for reference
+    boundaries = []
+    for i in range(k - 1):
+        max_current = int(np.max(np.where(labels == i)[0]))
+        min_next    = int(np.min(np.where(labels == i + 1)[0]))
+        boundaries.append((max_current + min_next) // 2)
 
-    return output
+    return output, boundaries

@@ -39,22 +39,38 @@ class ThresholdController:
         if self.model.original_image is None:
             raise ValueError("No image loaded")
 
-        if mode not in {"Global", "Local"}:
-            raise ValueError(f"Unsupported mode: {mode}")
-
         gray = self._to_grayscale(self.model.original_image)
 
-        # Spectral thresholding is a segmentation technique, apply it directly
         if technique.lower() == "spectral":
-            return spectral_thresholding(gray, k=3, sigma=20)
+            if mode == "Global":
+                output, _ = spectral_thresholding(gray, k=3, sigma=20)
+                return output
+            else:
+                return self._apply_spectral_local(gray, window_size)
 
         threshold_function = self._select_threshold_function(technique)
-
         if mode == "Global":
             return apply_global_threshold(gray, threshold_function)
-
         return apply_local_threshold(gray, threshold_function, block_size=window_size)
 
+
+    def _apply_spectral_local(self, gray, window_size):
+        import numpy as np
+        h, w = gray.shape
+        output = np.zeros_like(gray, dtype=np.uint8)
+
+        for y in range(0, h, window_size):
+            for x in range(0, w, window_size):
+                block = gray[y:y+window_size, x:x+window_size]
+                
+                if block.shape[0] < 4 or block.shape[1] < 4:
+                    output[y:y+window_size, x:x+window_size] = block
+                    continue
+                
+                result, _ = spectral_thresholding(block, k=3, sigma=20)
+                output[y:y+window_size, x:x+window_size] = result
+
+        return output
     def _to_grayscale(self, image):
         if len(image.shape) == 3:
             return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
