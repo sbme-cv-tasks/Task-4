@@ -51,6 +51,8 @@ class Ui_MainWindow(object):
         self.comboThresholdMode = self.centralwidget.findChild(QComboBox, "comboThresholdMode")
         self.comboThresholdTechnique = self.centralwidget.findChild(QComboBox, "comboThresholdTechnique")
         self.windowSize = self.centralwidget.findChild(QSpinBox, "windowSize")
+        self.spinSpectralK = self.centralwidget.findChild(QSpinBox, "spinSpectralK")
+        self.labelSpectralK = self.centralwidget.findChild(QWidget, "labelSpectralK")
         self.btnApplyThreshold = self.centralwidget.findChild(QPushButton, "btnApplyThreshold")
 
         # ---- Segmentation tab controls ----
@@ -72,5 +74,9 @@ class Ui_MainWindow(object):
         self.spinNClusters = self.centralwidget.findChild(QSpinBox, "spinNClusters")
         self.comboLinkage = self.centralwidget.findChild(QComboBox, "comboLinkage")
         self.spinResizeDim = self.centralwidget.findChild(QSpinBox, "spinResizeDim")
+
+        # RegionGrowing params
+        self.spinNSeeds = self.centralwidget.findChild(QSpinBox, "spinNSeeds")
+        self.spinRGThreshold = self.centralwidget.findChild(QDoubleSpinBox, "spinRGThreshold")
 
         QMetaObject.connectSlotsByName(MainWindow)

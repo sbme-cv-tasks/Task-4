@@ -28,7 +28,6 @@ def spectral_thresholding(img, k=3, sigma=20, random_seed=42):
     rng = np.random.default_rng(random_seed)
     first_idx = rng.integers(0, 256)
     centroids = [embedding[first_idx]]
-
     for _ in range(k - 1):
         dists = np.min(
             [np.linalg.norm(embedding - c, axis=1) ** 2 for c in centroids],
@@ -56,24 +55,28 @@ def spectral_thresholding(img, k=3, sigma=20, random_seed=42):
     cluster_means = np.array([
         np.mean(np.where(labels == i)[0]) for i in range(k)
     ])
-    sorted_order = np.argsort(cluster_means)
-    label_map = np.zeros(k, dtype=int)
-    for new_label, old_label in enumerate(sorted_order):
-        label_map[old_label] = new_label
-    labels = label_map[labels]
 
-    # 8. Build output image directly from labels (no overlap fix)
-    output = np.zeros_like(img, dtype=np.uint8)
-    lut = np.zeros(256, dtype=np.uint8)
-    for i in range(256):
-        lut[i] = int(255 * labels[i] / (k - 1))
-    output = lut[img]
+    # 8. Overlap fix — re-assign each intensity to nearest sorted cluster mean
+    sorted_cluster_means = np.sort(cluster_means)
+    final_labels = np.array([
+        np.argmin(np.abs(i - sorted_cluster_means))
+        for i in range(256)
+    ])
 
-    # Extract boundaries for reference
+    # 9. Extract boundaries by finding first transition point between classes
     boundaries = []
     for i in range(k - 1):
-        max_current = int(np.max(np.where(labels == i)[0]))
-        min_next    = int(np.min(np.where(labels == i + 1)[0]))
-        boundaries.append((max_current + min_next) // 2)
+        for intensity in range(255):
+            if final_labels[intensity] == i and final_labels[intensity + 1] == i + 1:
+                boundaries.append(intensity)
+                break
 
+    # 10. Build output image
+    lut = np.zeros(256, dtype=np.uint8)
+    for i in range(256):
+        lut[i] = int(255 * final_labels[i] / (k - 1))
+    output = lut[img]
+
+    print(f"k={k}, sorted_means={sorted_cluster_means.round(1)}, boundaries={boundaries}")
     return output, boundaries
+    

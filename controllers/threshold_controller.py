@@ -12,30 +12,39 @@ class ThresholdController:
         self.model = model
         self.statusbar = statusbar
 
-        self._connect_signals()
+        self._connect_signals()  
         
-        # Set default to Local mode to enable window size control
         self.ui.comboThresholdMode.setCurrentText("Local")
         self.on_mode_changed("Local")
 
     def _connect_signals(self):
         self.ui.comboThresholdMode.currentTextChanged.connect(self.on_mode_changed)
+        self.ui.comboThresholdTechnique.currentTextChanged.connect(
+            lambda _: self._update_k_visibility()
+        )
+        self._update_k_visibility()  
+
+    def _update_k_visibility(self):
+        technique = self.ui.comboThresholdTechnique.currentText()
+        is_spectral = technique.lower() == "spectral"
+        self.ui.spinSpectralK.setVisible(is_spectral)
+        self.ui.labelSpectralK.setVisible(is_spectral)
 
     def on_mode_changed(self, mode):
         local_mode = mode == "Local"
         self.ui.windowSize.setEnabled(local_mode)
-
         if self.statusbar is not None:
             if local_mode:
                 self.statusbar.showMessage("Using local thresholding: choose window size", 3000)
             else:
                 self.statusbar.showMessage("Using global thresholding", 3000)
-
+   
     def apply_thresholding(self):
         mode = self.ui.comboThresholdMode.currentText()
         technique = self.ui.comboThresholdTechnique.currentText()
         window_size = self.ui.windowSize.value()
-
+        k = self.ui.spinSpectralK.value()  
+        
         if self.model.original_image is None:
             raise ValueError("No image loaded")
 
@@ -43,34 +52,35 @@ class ThresholdController:
 
         if technique.lower() == "spectral":
             if mode == "Global":
-                output, _ = spectral_thresholding(gray, k=3, sigma=20)
+                output, _ = spectral_thresholding(gray, k=k, sigma=5)
                 return output
             else:
-                return self._apply_spectral_local(gray, window_size)
+                return self._apply_spectral_local(gray, window_size, k=k)
 
         threshold_function = self._select_threshold_function(technique)
         if mode == "Global":
             return apply_global_threshold(gray, threshold_function)
         return apply_local_threshold(gray, threshold_function, block_size=window_size)
 
-
-    def _apply_spectral_local(self, gray, window_size):
+    def _apply_spectral_local(self, gray, window_size, k=3):
         import numpy as np
         h, w = gray.shape
         output = np.zeros_like(gray, dtype=np.uint8)
 
-        for y in range(0, h, window_size):
-            for x in range(0, w, window_size):
-                block = gray[y:y+window_size, x:x+window_size]
-                
+        # Spectral needs larger blocks to detect intensity differences
+        effective_size = window_size * 20
+
+        for y in range(0, h, effective_size):
+            for x in range(0, w, effective_size):
+                block = gray[y:y+effective_size, x:x+effective_size]
                 if block.shape[0] < 4 or block.shape[1] < 4:
-                    output[y:y+window_size, x:x+window_size] = block
+                    output[y:y+effective_size, x:x+effective_size] = block
                     continue
-                
-                result, _ = spectral_thresholding(block, k=3, sigma=20)
-                output[y:y+window_size, x:x+window_size] = result
+                result, _ = spectral_thresholding(block, k=k, sigma=5)
+                output[y:y+effective_size, x:x+effective_size] = result
 
         return output
+    
     def _to_grayscale(self, image):
         if len(image.shape) == 3:
             return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
